@@ -334,7 +334,7 @@ export default function Home() {
             </div>
 
            
-            <div className="grid grid-cols-3 gap-8 mt-16">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-8 mt-16">
               {[
                 { value: "0+", label: "Années d'expérience" }, 
                 { value: "8+", label: "Projets réalisés" },    
@@ -413,11 +413,11 @@ export default function Home() {
       <section id="skills" className="py-20 relative z-10">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="orbitron text-5xl font-bold neon-text mb-4">COMPÉTENCES</h2>
+            <h2 className="orbitron text-3xl sm:text-5xl font-bold neon-text mb-4">COMPÉTENCES</h2>
             <div className="w-24 h-1 bg-linear-to-r from-cyan-400 to-blue-500 mx-auto"></div>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-12">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
             <div className="fade-in">
               <h3 className="text-2xl font-bold text-cyan-300 mb-8">Compétences techniques</h3>
               <div className="space-y-6">
