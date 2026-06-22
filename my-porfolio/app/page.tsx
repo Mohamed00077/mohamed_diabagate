@@ -4,14 +4,16 @@ import Link from "next/link";
 import Image from "next/image";
 import { useState, useEffect, useRef } from "react";
 import ProjectCarousel from "./components/ProjectCarousel";
+import LoadingScreen from "./components/LoadingScreen";
+
 export default function Home() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("home");
   const [typingText, setTypingText] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
   const canvasRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-  
     const phrases = [
       "Coder le futur, maîtriser le web",
       "Développeur Full Stack & Innovateur Tech",
@@ -43,7 +45,6 @@ export default function Home() {
     }
     typeWriter();
   }, []);
-
 
   useEffect(() => {
     if (!canvasRef.current) return;
@@ -89,7 +90,6 @@ export default function Home() {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
-
 
   useEffect(() => {
     const handleScroll = () => {
@@ -137,7 +137,6 @@ export default function Home() {
     (e.target as HTMLFormElement).reset();
   };
 
-  // 🏷️ Labels de navigation en français (les "id" des sections restent en anglais, c'est normal et sans impact visuel)
   const navLinks = [
     { id: "home", label: "Accueil" },
     { id: "about", label: "À propos" },
@@ -156,7 +155,7 @@ export default function Home() {
     { label: "Python/Flask", pct: 45 },
     { label: "Mobile -React Native", pct: 40 },
     { label: "Database Management", pct: 40 },
-    { label: "Git/GitHub", pct: 85 }
+    { label: "Git/GitHub", pct: 85 },
   ];
 
   const professionalSkills = [
@@ -167,70 +166,66 @@ export default function Home() {
     { label: "Adaptabilité", pct: 70 },
   ];
 
-  
-
   const projects = [
     {
-      img: "post-it.png",        
-      title: "Post it",    
-      desc: "Un site web innovant qui utilise une API pour permettre aux utilisateurs d'envoyer des messages anonymement, favorisant ainsi l'expression libre et créative.",       
-      tags: ["Vue js"],  
-      link: "https://post-it-iota-rosy.vercel.app/",   
+      img: "post-it.png",
+      title: "Post it",
+      desc: "Un site web innovant qui utilise une API pour permettre aux utilisateurs d'envoyer des messages anonymement, favorisant ainsi l'expression libre et créative.",
+      tags: ["Vue js"],
+      link: "https://post-it-iota-rosy.vercel.app/",
     },
     {
       img: "",
       title: "YOWL",
       desc: "Un outil permettant de commenter n'importe quel contenu sur internet simplement en utilisant le lien correspondant, facilitant ainsi les échanges d'idées et d'opinions.",
       tags: ["Vue js, Laravel, Mysql"],
-      link: "", 
+      link: "",
     },
     {
       img: "",
       title: "Show time",
-      desc: " Un site de réservation de billets qui simplifie l'achat de places pour vos films préférés, offrant une expérience utilisateur fluide et rapide.",
+      desc: "Un site de réservation de billets qui simplifie l'achat de places pour vos films préférés, offrant une expérience utilisateur fluide et rapide.",
       tags: ["Nest js, MongoDB"],
-      link: "", 
+      link: "",
     },
     {
       img: "free_add.png",
       title: "Free_add",
       desc: "Une plateforme d'annonces où les utilisateurs peuvent publier divers types d'annonces, qu'il s'agisse d'articles, de services, ou d'autres offres, facilitant ainsi la mise en relation entre acheteurs et vendeurs.",
       tags: ["Laravel, Mysql"],
-      link: "https://freeadd-production.up.railway.app/", 
+      link: "https://freeadd-production.up.railway.app/",
     },
     {
       img: "rot.png",
       title: "My rottent tomato",
       desc: "Un site web dédié à la consultation des bandes-annonces de films, permettant aux cinéphiles de découvrir les dernières nouveautés et de se tenir au courant des sorties à venir.",
       tags: ["Next js, Laravel, Mysql"],
-      link: "", 
+      link: "",
     },
     {
       img: "Redditech.jpeg",
       title: "Redditech",
       desc: "Application mobile de gestion de tâches",
       tags: ["React Native"],
-      link: "https://expo.dev/accounts/mateo_dev007/projects/mobilapp101/builds/930fbd57-6b17-44cc-af9d-e7162aede31f", 
+      link: "https://expo.dev/accounts/mateo_dev007/projects/mobilapp101/builds/930fbd57-6b17-44cc-af9d-e7162aede31f",
     },
   ];
 
-
   const contactInfo = [
-    { icon: "📧", label: "Email",      value: "momodiabagate@gmail.com" },
-    { icon: "📱", label: "Téléphone",  value: "+225 01 42 30 94 39" },
+    { icon: "📧", label: "Email", value: "momodiabagate@gmail.com" },
+    { icon: "📱", label: "Téléphone", value: "+225 01 42 30 94 39" },
     { icon: "📍", label: "Localisation", value: "Abidjan, Côte d'ivoire" },
-    { icon: "💼", label: "LinkedIn",   value: "www.linkedin.com/in/mohamed-diabagate-375338385" },
+    { icon: "💼", label: "LinkedIn", value: "www.linkedin.com/in/mohamed-diabagate-375338385" },
   ];
 
   return (
     <div className="text-white">
-   
+      {isLoading && <LoadingScreen onFinish={() => setIsLoading(false)} />}
+
       <div ref={canvasRef} className="matrix-code" id="matrix"></div>
 
-      
       <div className="fixed inset-0 cyber-grid"></div>
 
-      
       <div className="floating-orb w-20 h-20 top-10 left-10"     style={{ animationDelay: "0s" }}></div>
       <div className="floating-orb w-12 h-12 top-1/3 right-20"   style={{ animationDelay: "2s" }}></div>
       <div className="floating-orb w-16 h-16 bottom-20 left-1/4" style={{ animationDelay: "4s" }}></div>
@@ -239,7 +234,6 @@ export default function Home() {
       <nav className="fixed top-0 w-full z-50 hologram">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="flex items-center justify-between h-20">
-
             <div
               className="orbitron text-2xl font-bold neon-text cursor-pointer"
               onMouseEnter={handleLogoHover}
@@ -290,39 +284,36 @@ export default function Home() {
         )}
       </nav>
 
-     
       <section id="home" className="min-h-screen flex items-center justify-center relative z-10 pt-20">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="text-center space-y-8">
-
-            
             <div className="relative inline-block mb-12">
               <div className="pulse-ring w-64 h-64"></div>
               <div className="pulse-ring w-64 h-64" style={{ animationDelay: "1s" }}></div>
               <div className="relative w-64 h-64 mx-auto hologram rounded-full overflow-hidden">
-               
-                    <Image src="/photo.png" alt="Momo" fill className="object-cover" />
-                
+                <Image src="/photo.png" alt="Momo" fill className="object-cover" />
               </div>
             </div>
 
-         
             <div className="orbitron text-6xl md:text-8xl font-black mb-6">
               <span className="neon-text">Mohamed</span>
               <br />
-             
               <span className="text-4xl md:text-6xl text-cyan-300">Diabagate / Dev</span>
             </div>
 
-            
             <div className="text-2xl md:text-3xl text-cyan-200 mb-8">
-              <div className="h-12">{typingText}<span className="border-r-2 border-cyan-400 animate-pulse ml-1"></span></div>
+              <div className="h-12">
+                {typingText}
+                <span className="border-r-2 border-cyan-400 animate-pulse ml-1"></span>
+              </div>
             </div>
-            
 
             <div className="flex flex-col md:flex-row gap-6 justify-center items-center">
-              <a  href="/CV_Mohamed_Diabagate.pdf" download
-              className="hologram px-12 py-4 text-xl font-bold neon-text hover:bg-cyan-900/30 transition-all duration-300 transform hover:scale-105">
+              <a
+                href="/CV_Mohamed_Diabagate.pdf"
+                download
+                className="hologram px-12 py-4 text-xl font-bold neon-text hover:bg-cyan-900/30 transition-all duration-300 transform hover:scale-105"
+              >
                 ENGAGEZ-MOI
               </a>
               <Link
@@ -333,12 +324,11 @@ export default function Home() {
               </Link>
             </div>
 
-           
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-8 mt-16">
               {[
-                { value: "0+", label: "Années d'expérience" }, 
-                { value: "8+", label: "Projets réalisés" },    
-                { value: "90%", label: "Taux de satisfaction" }, 
+                { value: "0+", label: "Années d'expérience" },
+                { value: "8+", label: "Projets réalisés" },
+                { value: "90%", label: "Taux de satisfaction" },
               ].map(({ value, label }) => (
                 <div key={label} className="hologram p-6 rounded-lg">
                   <div className="orbitron text-4xl font-bold neon-text mb-2">{value}</div>
@@ -350,8 +340,6 @@ export default function Home() {
         </div>
       </section>
 
-
-
       <section id="about" className="py-20 relative z-10">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="text-center mb-16">
@@ -360,43 +348,40 @@ export default function Home() {
           </div>
 
           <div className="grid md:grid-cols-2 gap-12 items-center">
-
-
-         
             <div className="fade-in">
               <div className="hologram p-8 rounded-lg">
                 <div className="relative w-full h-80">
-                 
-                      <Image src="/code.png" alt="À propos" fill className="object-cover rounded-lg" />
-                  
+                  <Image src="/code.png" alt="À propos" fill className="object-cover rounded-lg" />
                 </div>
               </div>
             </div>
 
             <div className="fade-in space-y-6">
-            
-              <h3 className="text-3xl font-bold text-cyan-300 mb-4">
-                Développeur Full Stack
-              </h3>
+              <h3 className="text-3xl font-bold text-cyan-300 mb-4">Développeur Full Stack</h3>
 
-             
-          <p className="text-lg text-gray-300 leading-relaxed">
-             Bienvenue dans mon univers numérique ! 
-             Je suis Diabagate Mohamed, un développeur débutant passionné, récemment diplômé d'une formation en développement web.
-             Bien que je sois nouveau dans le domaine, ma curiosité pour les technologies et mon désir d'apprendre me motivent à explorer les possibilités infinies du web.               </p>
+              <p className="text-lg text-gray-300 leading-relaxed">
+                Bienvenue dans mon univers numérique ! Je suis Diabagate Mohamed, un développeur
+                débutant passionné, récemment diplômé d'une formation en développement web. Bien que
+                je sois nouveau dans le domaine, ma curiosité pour les technologies et mon désir
+                d'apprendre me motivent à explorer les possibilités infinies du web.
+              </p>
 
-              
-          <p className="text-lg text-gray-300 leading-relaxed">
-             Je me concentre sur la création d'interfaces front-end attrayantes et intuitives, tout en apprenant les bases des architectures back-end.
-             Mon objectif est de développer des expériences numériques qui soient non seulement fonctionnelles, mais aussi agréables à utiliser. J'ai acquis des compétences dans les frameworks modernes et je suis impatient de continuer à me perfectionner dans les pratiques de développement.              </p>
+              <p className="text-lg text-gray-300 leading-relaxed">
+                Je me concentre sur la création d'interfaces front-end attrayantes et intuitives,
+                tout en apprenant les bases des architectures back-end. Mon objectif est de
+                développer des expériences numériques qui soient non seulement fonctionnelles, mais
+                aussi agréables à utiliser. J'ai acquis des compétences dans les frameworks modernes
+                et je suis impatient de continuer à me perfectionner dans les pratiques de
+                développement.
+              </p>
 
               <div className="grid grid-cols-2 gap-6 mt-8">
                 {[
-                  { title: "Frontend",  sub: "Vue js - Next js - React" },
-                  { title: "Backend",   sub: "Laravel - Nest js" },
-                  { title: "Database",  sub: "Mysql - MongoDb" },
-                  { title: "Système",   sub: "Linux - Windows" },
-                  { title: "Autre",     sub: "Outils divers" },
+                  { title: "Frontend", sub: "Vue js - Next js - React" },
+                  { title: "Backend", sub: "Laravel - Nest js" },
+                  { title: "Database", sub: "Mysql - MongoDb" },
+                  { title: "Système", sub: "Linux - Windows" },
+                  { title: "Autre", sub: "Outils divers" },
                 ].map(({ title, sub }) => (
                   <div key={title} className="hologram p-4 rounded-lg text-center">
                     <div className="text-2xl font-bold neon-text">{title}</div>
@@ -409,7 +394,6 @@ export default function Home() {
         </div>
       </section>
 
-    
       <section id="skills" className="py-20 relative z-10">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="text-center mb-16">
@@ -455,19 +439,16 @@ export default function Home() {
         </div>
       </section>
 
-    
-<section id="projects" className="py-20 relative z-10">
-  <div className="max-w-7xl mx-auto px-6 lg:px-8">
-    <div className="text-center mb-16">
-      <h2 className="orbitron text-5xl font-bold neon-text mb-4">PROJETS</h2>
-      <div className="w-24 h-1 bg-linear-to-r from-cyan-400 to-blue-500 mx-auto"></div>
-    </div>
-    <ProjectCarousel projects={projects} />
-  </div>
-</section>
+      <section id="projects" className="py-20 relative z-10">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="orbitron text-5xl font-bold neon-text mb-4">PROJETS</h2>
+            <div className="w-24 h-1 bg-linear-to-r from-cyan-400 to-blue-500 mx-auto"></div>
+          </div>
+          <ProjectCarousel projects={projects} />
+        </div>
+      </section>
 
-
- 
       <section id="contact" className="py-20 relative z-10">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="text-center mb-16">
@@ -480,7 +461,9 @@ export default function Home() {
               <h3 className="text-2xl font-bold text-cyan-300 mb-8">Entrons en contact</h3>
 
               <p className="text-lg text-gray-300 mb-8">
-              Passionné par le développement web, je suis prêt à donner vie à vos idées avec des solutions dynamiques et performantes.              </p>
+                Passionné par le développement web, je suis prêt à donner vie à vos idées avec des
+                solutions dynamiques et performantes.
+              </p>
 
               <div className="space-y-6">
                 {contactInfo.map(({ icon, label, value }) => (
@@ -500,10 +483,8 @@ export default function Home() {
                 <h4 className="text-xl font-bold text-cyan-300 mb-4">Suivez-moi</h4>
                 <div className="flex space-x-4">
                   {[
-                    // { icon: "📘", href: "" },
                     { icon: "🐦", href: "www.linkedin.com/in/mohamed-diabagate-375338385" },
-                    // { icon: "📷", href: "#" }, 
-                    { icon: "💻", href: "https://github.com/Mohamed00077" }, 
+                    { icon: "💻", href: "https://github.com/Mohamed00077" },
                   ].map(({ icon, href }, i) => (
                     <Link
                       key={i}
@@ -517,7 +498,6 @@ export default function Home() {
               </div>
             </div>
 
-            
             <div className="fade-in">
               <form onSubmit={handleSubmit} className="hologram p-8 rounded-lg space-y-6">
                 <h3 className="text-2xl font-bold text-cyan-300 mb-6">Envoyer un message</h3>
@@ -525,23 +505,38 @@ export default function Home() {
                 <div className="grid md:grid-cols-2 gap-4">
                   <div>
                     <label className="block text-white font-semibold mb-2">Prénom</label>
-                    <input type="text" className="w-full px-4 py-3 cyber-input rounded-lg" placeholder="Jean" />
+                    <input
+                      type="text"
+                      className="w-full px-4 py-3 cyber-input rounded-lg"
+                      placeholder="Jean"
+                    />
                   </div>
                   <div>
                     <label className="block text-white font-semibold mb-2">Nom</label>
-                    <input type="text" className="w-full px-4 py-3 cyber-input rounded-lg" placeholder="Dupont" />
+                    <input
+                      type="text"
+                      className="w-full px-4 py-3 cyber-input rounded-lg"
+                      placeholder="Dupont"
+                    />
                   </div>
                 </div>
 
-
                 <div>
                   <label className="block text-white font-semibold mb-2">Email</label>
-                  <input type="email" className="w-full px-4 py-3 cyber-input rounded-lg" placeholder="jean@exemple.com" />
+                  <input
+                    type="email"
+                    className="w-full px-4 py-3 cyber-input rounded-lg"
+                    placeholder="jean@exemple.com"
+                  />
                 </div>
 
                 <div>
                   <label className="block text-white font-semibold mb-2">Sujet</label>
-                  <input type="text" className="w-full px-4 py-3 cyber-input rounded-lg" placeholder="Discussion de projet" />
+                  <input
+                    type="text"
+                    className="w-full px-4 py-3 cyber-input rounded-lg"
+                    placeholder="Discussion de projet"
+                  />
                 </div>
 
                 <div>
@@ -565,47 +560,38 @@ export default function Home() {
         </div>
       </section>
 
-     
       <footer className="py-12 border-t border-cyan-900/30 relative z-10">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="grid md:grid-cols-4 gap-8">
-
             <div>
-            
-              <div className="orbitron text-2xl font-bold neon-text mb-4">
-                &lt;Momo/&gt;
-              </div>
-              
+              <div className="orbitron text-2xl font-bold neon-text mb-4">&lt;Momo/&gt;</div>
               <p className="text-gray-400">
-               Développeur passionné, toujours en quête d'innovation et d'apprentissage.
+                Développeur passionné, toujours en quête d'innovation et d'apprentissage.
               </p>
             </div>
 
-          
             <div>
               <h4 className="text-xl font-bold text-cyan-300 mb-4">Services</h4>
               <ul className="space-y-2 text-gray-400">
-                {[
-                  "Développement Web",  
-                  "Applications Mobile",  
-                  "API & Backend",  
-                ].map((s) => (
-                  <li key={s}><Link href="#" className="hover:text-cyan-400 transition-colors">{s}</Link></li>
+                {["Développement Web", "Applications Mobile", "API & Backend"].map((s) => (
+                  <li key={s}>
+                    <Link href="#" className="hover:text-cyan-400 transition-colors">
+                      {s}
+                    </Link>
+                  </li>
                 ))}
               </ul>
             </div>
 
-            
             <div>
               <h4 className="text-xl font-bold text-cyan-300 mb-4">Technologies</h4>
               <ul className="space-y-2 text-gray-400">
-                {[
-                  "React / Next.js",  
-                  "Laravel",  
-                  "Python",  
-                  "Mysql/PostgreSQL",  
-                ].map((t) => (
-                  <li key={t}><Link href="#" className="hover:text-cyan-400 transition-colors">{t}</Link></li>
+                {["React / Next.js", "Laravel", "Python", "Mysql/PostgreSQL"].map((t) => (
+                  <li key={t}>
+                    <Link href="#" className="hover:text-cyan-400 transition-colors">
+                      {t}
+                    </Link>
+                  </li>
                 ))}
               </ul>
             </div>
@@ -614,7 +600,14 @@ export default function Home() {
               <h4 className="text-xl font-bold text-cyan-300 mb-4">Liens rapides</h4>
               <ul className="space-y-2 text-gray-400">
                 {navLinks.slice(1).map(({ id, label }) => (
-                  <li key={id}><Link href={`#${id}`} className="hover:text-cyan-400 transition-colors capitalize">{label}</Link></li>
+                  <li key={id}>
+                    <Link
+                      href={`#${id}`}
+                      className="hover:text-cyan-400 transition-colors capitalize"
+                    >
+                      {label}
+                    </Link>
+                  </li>
                 ))}
               </ul>
             </div>
@@ -622,7 +615,8 @@ export default function Home() {
 
           <div className="border-t border-cyan-900/30 mt-12 pt-8 text-center">
             <p className="text-gray-400">
-              &copy; {new Date().getFullYear()} DIABAGATE MOHAMED. Tous droits réservés. | Conçu avec ⚡ et passion
+              &copy; {new Date().getFullYear()} DIABAGATE MOHAMED. Tous droits réservés. | Conçu
+              avec ⚡ et passion
             </p>
           </div>
         </div>

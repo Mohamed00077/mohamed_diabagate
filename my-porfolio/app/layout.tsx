@@ -13,6 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+  
   title: "Mohamed Diabagate | Développeur Full Stack NestJS & Next.js",
   description: "Découvrez le portfolio de Mohamed Diabagate, développeur Full Stack spécialisé dans la création d'applications web modernes, performantes et scalables.",
   keywords: ["Mohamed Diabagate", "Développeur Full Stack", "NestJS", "Next.js", "React", "Portfolio Développeur", "Abidjan", "Côte d'Ivoire"],
