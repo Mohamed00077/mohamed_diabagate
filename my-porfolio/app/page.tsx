@@ -131,16 +131,38 @@ useEffect(() => {
     setTimeout(() => el.classList.remove("glitch"), 1000);
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const msg = document.createElement("div");
-    msg.className =
-      "fixed top-20 right-6 bg-green-500/20 border border-green-400 text-green-400 px-6 py-4 rounded-lg z-50";
-    msg.textContent = "Message envoyé avec succès ! Je vous répondrai bientôt.";
-    document.body.appendChild(msg);
-    setTimeout(() => msg.remove(), 3000);
-    (e.target as HTMLFormElement).reset();
+const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  e.preventDefault();
+  const form = e.target as HTMLFormElement;
+  const data = {
+    prenom: (form[0] as HTMLInputElement).value,
+    nom:    (form[1] as HTMLInputElement).value,
+    email:  (form[2] as HTMLInputElement).value,
+    sujet:  (form[3] as HTMLInputElement).value,
+    message:(form[4] as HTMLTextAreaElement).value,
   };
+
+  const res = await fetch("/api/contact", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data),
+  });
+
+  const msg = document.createElement("div");
+  msg.className = "fixed top-20 right-6 px-6 py-4 rounded-lg z-50 border";
+
+  if (res.ok) {
+    msg.className += " bg-green-500/20 border-green-400 text-green-400";
+    msg.textContent = "Message envoyé avec succès ! Je vous répondrai bientôt.";
+    form.reset();
+  } else {
+    msg.className += " bg-red-500/20 border-red-400 text-red-400";
+    msg.textContent = "Erreur lors de l'envoi. Réessayez.";
+  }
+
+  document.body.appendChild(msg);
+  setTimeout(() => msg.remove(), 3000);
+};
 
   const navLinks = [
     { id: "home",     label: "Accueil" },
