@@ -5,6 +5,7 @@ import Image from "next/image";
 import { useState, useEffect, useRef } from "react";
 import ProjectCarousel from "./components/ProjectCarousel";
 import LoadingScreen from "./components/LoadingScreen";
+import Parcourt from "./components/Parcourt";
 
 export default function Home() {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -91,34 +92,38 @@ export default function Home() {
     };
   }, []);
 
-  useEffect(() => {
-    const handleScroll = () => {
-      const sections = document.querySelectorAll("section[id]");
-      sections.forEach((section) => {
-        const el = section as HTMLElement;
-        if (window.scrollY >= el.offsetTop - 200) {
-          setActiveSection(el.getAttribute("id") || "");
-        }
-      });
-      const orbs = document.querySelectorAll<HTMLElement>(".floating-orb");
-      orbs.forEach((orb, i) => {
-        const speed = 0.5 + i * 0.1;
-        orb.style.transform = `translateY(${window.pageYOffset * speed}px)`;
-      });
-    };
-    window.addEventListener("scroll", handleScroll);
+ 
+useEffect(() => {
+  if (isLoading) return; 
 
-    const observer = new IntersectionObserver(
-      (entries) => entries.forEach((e) => { if (e.isIntersecting) e.target.classList.add("visible"); }),
-      { threshold: 0.1, rootMargin: "0px 0px -50px 0px" }
-    );
-    document.querySelectorAll(".fade-in").forEach((el) => observer.observe(el));
+  const handleScroll = () => {
+    const sections = document.querySelectorAll("section[id]");
+    sections.forEach((section) => {
+      const el = section as HTMLElement;
+      if (window.scrollY >= el.offsetTop - 200) {
+        setActiveSection(el.getAttribute("id") || "");
+      }
+    });
+    const orbs = document.querySelectorAll<HTMLElement>(".floating-orb");
+    orbs.forEach((orb, i) => {
+      const speed = 0.5 + i * 0.1;
+      orb.style.transform = `translateY(${window.pageYOffset * speed}px)`;
+    });
+  };
+  window.addEventListener("scroll", handleScroll);
 
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-      observer.disconnect();
-    };
-  }, []);
+  const observer = new IntersectionObserver(
+    (entries) => entries.forEach((e) => { if (e.isIntersecting) e.target.classList.add("visible"); }),
+    { threshold: 0.1, rootMargin: "0px 0px -50px 0px" }
+  );
+  document.querySelectorAll(".fade-in").forEach((el) => observer.observe(el));
+  
+
+  return () => {
+    window.removeEventListener("scroll", handleScroll);
+    observer.disconnect();
+  };
+}, [isLoading]); 
 
   const handleLogoHover = (e: React.MouseEvent<HTMLDivElement>) => {
     const el = e.currentTarget;
@@ -138,32 +143,33 @@ export default function Home() {
   };
 
   const navLinks = [
-    { id: "home", label: "Accueil" },
-    { id: "about", label: "À propos" },
-    { id: "skills", label: "Compétences" },
+    { id: "home",     label: "Accueil" },
+    { id: "about",    label: "À propos" },
+    { id: "skills",   label: "Compétences" },
     { id: "projects", label: "Projets" },
-    { id: "contact", label: "Contact" },
+    { id: "parcours", label: "Parcours" },
+    { id: "contact",  label: "Contact" },
   ];
 
   const technicalSkills = [
-    { label: "HTML/CSS", pct: 95 },
-    { label: "Javascript", pct: 60 },
-    { label: "Vue js", pct: 40 },
-    { label: "React - Next js ", pct: 45 },
-    { label: "Nest js", pct: 40 },
-    { label: "PHP/Laravel", pct: 50 },
-    { label: "Python/Flask", pct: 45 },
-    { label: "Mobile -React Native", pct: 40 },
-    { label: "Database Management", pct: 40 },
-    { label: "Git/GitHub", pct: 85 },
+    { label: "HTML/CSS",               pct: 95 },
+    { label: "Javascript",             pct: 60 },
+    { label: "Vue js",                 pct: 40 },
+    { label: "React - Next js",        pct: 45 },
+    { label: "Nest js",                pct: 40 },
+    { label: "PHP/Laravel",            pct: 50 },
+    { label: "Python/Flask",           pct: 45 },
+    { label: "Mobile - React Native",  pct: 40 },
+    { label: "Database Management",    pct: 40 },
+    { label: "Git/GitHub",             pct: 85 },
   ];
 
   const professionalSkills = [
     { label: "Gestion de projet", pct: 70 },
-    { label: "Travail d'équipe", pct: 75 },
-    { label: "Communication", pct: 75 },
-    { label: "Autonomie", pct: 65 },
-    { label: "Adaptabilité", pct: 70 },
+    { label: "Travail d'équipe",  pct: 75 },
+    { label: "Communication",     pct: 75 },
+    { label: "Autonomie",         pct: 65 },
+    { label: "Adaptabilité",      pct: 70 },
   ];
 
   const projects = [
@@ -200,7 +206,7 @@ export default function Home() {
       title: "My rottent tomato",
       desc: "Un site web dédié à la consultation des bandes-annonces de films, permettant aux cinéphiles de découvrir les dernières nouveautés et de se tenir au courant des sorties à venir.",
       tags: ["Next js, Laravel, Mysql"],
-      link: "",
+      link: "https://cine.mikspot.net/",
     },
     {
       img: "Redditech.jpeg",
@@ -212,10 +218,10 @@ export default function Home() {
   ];
 
   const contactInfo = [
-    { icon: "📧", label: "Email", value: "momodiabagate@gmail.com" },
-    { icon: "📱", label: "Téléphone", value: "+225 01 42 30 94 39" },
+    { icon: "📧", label: "Email",        value: "momodiabagate@gmail.com" },
+    { icon: "📱", label: "Téléphone",    value: "+225 01 42 30 94 39" },
     { icon: "📍", label: "Localisation", value: "Abidjan, Côte d'ivoire" },
-    { icon: "💼", label: "LinkedIn", value: "www.linkedin.com/in/mohamed-diabagate-375338385" },
+    { icon: "💼", label: "LinkedIn",     value: "www.linkedin.com/in/mohamed-diabagate-375338385" },
   ];
 
   return (
@@ -223,7 +229,6 @@ export default function Home() {
       {isLoading && <LoadingScreen onFinish={() => setIsLoading(false)} />}
 
       <div ref={canvasRef} className="matrix-code" id="matrix"></div>
-
       <div className="fixed inset-0 cyber-grid"></div>
 
       <div className="floating-orb w-20 h-20 top-10 left-10"     style={{ animationDelay: "0s" }}></div>
@@ -231,17 +236,19 @@ export default function Home() {
       <div className="floating-orb w-16 h-16 bottom-20 left-1/4" style={{ animationDelay: "4s" }}></div>
       <div className="floating-orb w-8 h-8 top-2/3 right-1/3"    style={{ animationDelay: "6s" }}></div>
 
+      {/* ── NAV ── */}
       <nav className="fixed top-0 w-full z-50 hologram">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="flex items-center justify-between h-20">
+
             <Image
-  src="/icon.png"
-  alt="Momo logo"
-  width={60}
-  height={35}
-   className="object-contain rounded-full" 
-  style={{ filter: "drop-shadow(0 0 8px #00ffff)" }}
-/>
+              src="/icon.png"
+              alt="Momo logo"
+              width={60}
+              height={35}
+              className="object-contain rounded-full"
+              style={{ filter: "drop-shadow(0 0 8px #00ffff)" }}
+            />
 
             <div className="hidden md:flex space-x-8">
               {navLinks.map(({ id, label }) => (
@@ -286,6 +293,7 @@ export default function Home() {
         )}
       </nav>
 
+      {/* ── HOME ── */}
       <section id="home" className="min-h-screen flex items-center justify-center relative z-10 pt-20">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="text-center space-y-8">
@@ -328,8 +336,8 @@ export default function Home() {
 
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-8 mt-16">
               {[
-                { value: "0+", label: "Années d'expérience" },
-                { value: "8+", label: "Projets réalisés" },
+                { value: "0+",  label: "Années d'expérience" },
+                { value: "8+",  label: "Projets réalisés" },
                 { value: "90%", label: "Taux de satisfaction" },
               ].map(({ value, label }) => (
                 <div key={label} className="hologram p-6 rounded-lg">
@@ -342,6 +350,7 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ── ABOUT ── */}
       <section id="about" className="py-20 relative z-10">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="text-center mb-16">
@@ -360,14 +369,12 @@ export default function Home() {
 
             <div className="fade-in space-y-6">
               <h3 className="text-3xl font-bold text-cyan-300 mb-4">Développeur Full Stack</h3>
-
               <p className="text-lg text-gray-300 leading-relaxed">
                 Bienvenue dans mon univers numérique ! Je suis Diabagate Mohamed, un développeur
                 débutant passionné, récemment diplômé d'une formation en développement web. Bien que
                 je sois nouveau dans le domaine, ma curiosité pour les technologies et mon désir
                 d'apprendre me motivent à explorer les possibilités infinies du web.
               </p>
-
               <p className="text-lg text-gray-300 leading-relaxed">
                 Je me concentre sur la création d'interfaces front-end attrayantes et intuitives,
                 tout en apprenant les bases des architectures back-end. Mon objectif est de
@@ -380,10 +387,10 @@ export default function Home() {
               <div className="grid grid-cols-2 gap-6 mt-8">
                 {[
                   { title: "Frontend", sub: "Vue js - Next js - React" },
-                  { title: "Backend", sub: "Laravel - Nest js" },
+                  { title: "Backend",  sub: "Laravel - Nest js" },
                   { title: "Database", sub: "Mysql - MongoDb" },
-                  { title: "Système", sub: "Linux - Windows" },
-                  { title: "Autre", sub: "Outils divers" },
+                  { title: "Système",  sub: "Linux - Windows" },
+                  { title: "Autre",    sub: "Outils divers" },
                 ].map(({ title, sub }) => (
                   <div key={title} className="hologram p-4 rounded-lg text-center">
                     <div className="text-2xl font-bold neon-text">{title}</div>
@@ -396,6 +403,7 @@ export default function Home() {
         </div>
       </section>
 
+      
       <section id="skills" className="py-20 relative z-10">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="text-center mb-16">
@@ -441,6 +449,7 @@ export default function Home() {
         </div>
       </section>
 
+      
       <section id="projects" className="py-20 relative z-10">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="text-center mb-16">
@@ -451,6 +460,10 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ── PARCOURS ── */}
+      <Parcourt />
+
+      {/* ── CONTACT ── */}
       <section id="contact" className="py-20 relative z-10">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="text-center mb-16">
@@ -461,7 +474,6 @@ export default function Home() {
           <div className="grid md:grid-cols-2 gap-12">
             <div className="fade-in">
               <h3 className="text-2xl font-bold text-cyan-300 mb-8">Entrons en contact</h3>
-
               <p className="text-lg text-gray-300 mb-8">
                 Passionné par le développement web, je suis prêt à donner vie à vos idées avec des
                 solutions dynamiques et performantes.
@@ -507,38 +519,22 @@ export default function Home() {
                 <div className="grid md:grid-cols-2 gap-4">
                   <div>
                     <label className="block text-white font-semibold mb-2">Prénom</label>
-                    <input
-                      type="text"
-                      className="w-full px-4 py-3 cyber-input rounded-lg"
-                      placeholder="Jean"
-                    />
+                    <input type="text" className="w-full px-4 py-3 cyber-input rounded-lg" placeholder="Jean" />
                   </div>
                   <div>
                     <label className="block text-white font-semibold mb-2">Nom</label>
-                    <input
-                      type="text"
-                      className="w-full px-4 py-3 cyber-input rounded-lg"
-                      placeholder="Dupont"
-                    />
+                    <input type="text" className="w-full px-4 py-3 cyber-input rounded-lg" placeholder="Dupont" />
                   </div>
                 </div>
 
                 <div>
                   <label className="block text-white font-semibold mb-2">Email</label>
-                  <input
-                    type="email"
-                    className="w-full px-4 py-3 cyber-input rounded-lg"
-                    placeholder="jean@exemple.com"
-                  />
+                  <input type="email" className="w-full px-4 py-3 cyber-input rounded-lg" placeholder="jean@exemple.com" />
                 </div>
 
                 <div>
                   <label className="block text-white font-semibold mb-2">Sujet</label>
-                  <input
-                    type="text"
-                    className="w-full px-4 py-3 cyber-input rounded-lg"
-                    placeholder="Discussion de projet"
-                  />
+                  <input type="text" className="w-full px-4 py-3 cyber-input rounded-lg" placeholder="Discussion de projet" />
                 </div>
 
                 <div>
@@ -562,6 +558,7 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ── FOOTER ── */}
       <footer className="py-12 border-t border-cyan-900/30 relative z-10">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="grid md:grid-cols-4 gap-8">
@@ -577,9 +574,7 @@ export default function Home() {
               <ul className="space-y-2 text-gray-400">
                 {["Développement Web", "Applications Mobile", "API & Backend"].map((s) => (
                   <li key={s}>
-                    <Link href="#" className="hover:text-cyan-400 transition-colors">
-                      {s}
-                    </Link>
+                    <Link href="#" className="hover:text-cyan-400 transition-colors">{s}</Link>
                   </li>
                 ))}
               </ul>
@@ -590,9 +585,7 @@ export default function Home() {
               <ul className="space-y-2 text-gray-400">
                 {["React / Next.js", "Laravel", "Python", "Mysql/PostgreSQL"].map((t) => (
                   <li key={t}>
-                    <Link href="#" className="hover:text-cyan-400 transition-colors">
-                      {t}
-                    </Link>
+                    <Link href="#" className="hover:text-cyan-400 transition-colors">{t}</Link>
                   </li>
                 ))}
               </ul>
@@ -603,10 +596,7 @@ export default function Home() {
               <ul className="space-y-2 text-gray-400">
                 {navLinks.slice(1).map(({ id, label }) => (
                   <li key={id}>
-                    <Link
-                      href={`#${id}`}
-                      className="hover:text-cyan-400 transition-colors capitalize"
-                    >
+                    <Link href={`#${id}`} className="hover:text-cyan-400 transition-colors capitalize">
                       {label}
                     </Link>
                   </li>
@@ -617,8 +607,7 @@ export default function Home() {
 
           <div className="border-t border-cyan-900/30 mt-12 pt-8 text-center">
             <p className="text-gray-400">
-              &copy; {new Date().getFullYear()} DIABAGATE MOHAMED. Tous droits réservés. | Conçu
-              avec ⚡ et passion
+              &copy; {new Date().getFullYear()} DIABAGATE MOHAMED. Tous droits réservés. | Conçu avec ⚡ et passion
             </p>
           </div>
         </div>
