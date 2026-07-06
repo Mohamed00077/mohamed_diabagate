@@ -358,7 +358,7 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-8 mt-16">
               {[
-                { value: "0+",  label: "Années d'expérience" },
+                { value: "1+",  label: "Années d'expérience" },
                 { value: "8+",  label: "Projets réalisés" },
                 { value: "90%", label: "Taux de satisfaction" },
               ].map(({ value, label }) => (
