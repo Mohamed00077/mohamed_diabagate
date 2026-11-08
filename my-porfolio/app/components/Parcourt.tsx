@@ -16,7 +16,7 @@ const items: ParcourItem[] = [
     icon: "🎓",
     title: "Formation We.code",
     org: "Epitech Abidjan (wecode)",
-    period: "Janvier 2026 — En cours",
+    period: "Janvier 2026 — Juillet 2026",
     desc: "Programme intensif de formation en développement web et mobile. Apprentissage des technologies modernes : React.js, Vue.js, Next.js, NestJS, Laravel, MySQL et MongoDB.",
     tags: ["React.js", "Laravel", "NestJS", "React Native"],
   },

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Script from "next/script";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
@@ -26,7 +27,7 @@ export const metadata: Metadata = {
     siteName: "Mohamed Diabagate Portfolio",
     images: [
       {
-        url: "https://votre-domaine.com", // Image qui s'affichera sur LinkedIn/Twitter
+        url: "https://mohamed-diabagate.vercel.app/", 
         width: 1200,
         height: 630,
         alt: "Mohamed Diabagate - Développeur Full Stack",
@@ -55,10 +56,16 @@ export default function RootLayout({
 }>) {
   return (
     <html
-      lang="en"
+      lang="fr"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col">
+        {children}
+        <Script
+          src="https://code.tidio.co/7amabyn9wri7qxb70eloltivt82ahjzj.js"
+          strategy="afterInteractive"
+        />
+      </body>
     </html>
   );
 }
